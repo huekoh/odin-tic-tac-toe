@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({ sigint: true });
+
 const GameBoard = (function () {
   // initialise game board
   const board = [
@@ -20,13 +22,16 @@ const GameBoard = (function () {
   };
 
   const checkWin = () => {
+    let message = "";
+    let isWon = false;
     // check for a diagonal winner
     if (
       board[0][0] &&
       board[0][0] === board[1][1] &&
       board[0][0] === board[2][2]
     ) {
-      return `Player ${board[0][0]} is the winner!`;
+      message = `Player ${board[0][0]} is the winner!`;
+      isWon = true;
     }
 
     if (
@@ -34,13 +39,16 @@ const GameBoard = (function () {
       board[0][2] === board[1][1] &&
       board[0][2] === board[2][0]
     ) {
-      return `Player ${board[0][0]} is the winner!`;
+      message = `Player ${board[0][0]} is the winner!`;
+      isWon = true;
     }
 
     // check for a row winner
     for (row of board) {
       if (row[0] && row[0] === row[1] && row[0] === row[2]) {
-        return `Player ${row[0]} is the winner!`;
+        message = `Player ${row[0]} is the winner!`;
+        isWon = true;
+        break;
       }
     }
 
@@ -51,11 +59,18 @@ const GameBoard = (function () {
         board[0][i] === board[1][i] &&
         board[0][i] === board[2][i]
       ) {
-        return `Player ${board[0][i]} is the winner!`;
+        message = `Player ${board[0][i]} is the winner!`;
+        isWon = true;
+        break;
       }
     }
 
-    return "There are no winners yet :(";
+    if (!isWon) {
+      message = "There are no winners yet :(";
+    }
+
+    console.log(message);
+    return isWon;
   };
 
   const resetBoard = () => {
@@ -83,4 +98,24 @@ const Player = (function (name, char) {
   return { getPlayerChar, getPlayerName };
 })();
 
-const Game = (function () {})();
+const Game = (function () {
+  const playRound = () => {
+    let playerTurn = 0;
+    while (!GameBoard.checkWin()) {
+      let tileY = prompt("Which row (0-2) do you want to mark?:");
+      let tileX = prompt("Which column (0-2) do you want to mark?:");
+      if (!playerTurn) {
+        GameBoard.setTile(tileX, tileY, "X");
+        playerTurn++;
+      } else {
+        GameBoard.setTile(tileX, tileY, "O");
+        playerTurn--;
+      }
+      GameBoard.displayBoard();
+    }
+  };
+
+  return { playRound };
+})();
+
+Game.playRound();
