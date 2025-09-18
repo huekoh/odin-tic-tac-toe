@@ -1,0 +1,60 @@
+/* reset default browser styling */
+
+:root {
+  line-height: 1.5;
+
+  --text-2xs: 0.3rem;
+  --text-xs: 0.5rem;
+  --text-sm: 0.825rem;
+  --text-base: 1rem;
+  --text-med: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2rem;
+
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  --main-color: #ffd500dc;
+  --main-color-d: #ffd500;
+  --main-color-d2: #ffbf00;
+  --second-color: #4d3309;
+  --neutral-color: #e6e6e6;
+
+  --text-description-color: rgb(78, 78, 78);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+figure,
+p,
+ol,
+ul,
+body {
+  margin: 0;
+}
+
+ol[role="list"],
+ul[role="list"] {
+  list-style: none;
+  padding-inline: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a,
+label {
+  font-family: Inter, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  /* font-size: inherit;
+    font-weight: inherit; */
+}
