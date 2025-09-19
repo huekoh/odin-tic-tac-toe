@@ -99,23 +99,83 @@ const Player = (function (name, char) {
 })();
 
 const Game = (function () {
-  const playRound = () => {
-    let playerTurn = 0;
-    while (!GameBoard.checkWin()) {
-      let tileY = prompt("Which row (0-2) do you want to mark?:");
-      let tileX = prompt("Which column (0-2) do you want to mark?:");
-      if (!playerTurn) {
-        GameBoard.setTile(tileX, tileY, "X");
-        playerTurn++;
+  let currentPlayer = 0; // 0 for X, 1 for O
+  let gameActive = true;
+
+  const handleTileClick = (event) => {
+    if (!gameActive) return;
+
+    const tile = event.target;
+    const x = parseInt(tile.dataset.x);
+    const y = parseInt(tile.dataset.y);
+
+    // Check if tile is already taken
+    if (tile.textContent !== "") return;
+
+    try {
+      const char = currentPlayer === 0 ? "X" : "O";
+      GameBoard.setTile(x, y, char);
+
+      // Update HTML
+      tile.textContent = char;
+      tile.classList.add("disabled");
+
+      // Check for win
+      if (GameBoard.checkWin()) {
+        gameActive = false;
+        disableAllTiles();
       } else {
-        GameBoard.setTile(tileX, tileY, "O");
-        playerTurn--;
+        // Switch players
+        currentPlayer = currentPlayer === 0 ? 1 : 0;
       }
+
       GameBoard.displayBoard();
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
-  return { playRound };
+  const disableAllTiles = () => {
+    const tiles = document.querySelectorAll(".tiles");
+    tiles.forEach((tile) => tile.classList.add("disabled"));
+  };
+
+  const initGame = () => {
+    // Reset game state
+    currentPlayer = 0;
+    gameActive = true;
+    GameBoard.resetBoard();
+
+    // Add event listeners to tiles
+    const boardTiles = document.querySelectorAll(".tiles");
+    boardTiles.forEach((tile, index) => {
+      // Set data attributes for position
+      const x = index % 3;
+      const y = Math.floor(index / 3);
+      tile.dataset.x = x;
+      tile.dataset.y = y;
+
+      // Remove existing listeners and add new one
+      tile.replaceWith(tile.cloneNode(true));
+      const newTile = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+      newTile.addEventListener("click", handleTileClick);
+    });
+  };
+
+  const resetGame = () => {
+    initGame();
+  };
+
+  return { initGame, resetGame };
 })();
 
-Game.playRound();
+// Initialize the game when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  Game.initGame();
+
+  // Add reset button functionality if it exists
+  const resetButton = document.querySelector("#reset-button");
+  if (resetButton) {
+    resetButton.addEventListener("click", Game.resetGame);
+  }
+});

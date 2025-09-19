@@ -67,6 +67,10 @@ body {
   gap: 16px;
 }
 
+h1 {
+  font-size: var(--text-2xl);
+}
+
 .board {
   width: 540px;
   height: 540px;
