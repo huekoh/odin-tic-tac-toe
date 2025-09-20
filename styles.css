@@ -50,6 +50,7 @@ h2,
 h3,
 h4,
 h5,
+div,
 p,
 a,
 label {
@@ -87,4 +88,11 @@ h1 {
   border-style: solid;
   border-radius: 12px;
   place-self: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: var(--text-2xl);
+  font-weight: 700;
 }
