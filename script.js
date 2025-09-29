@@ -139,6 +139,10 @@ const Page = (function () {
   // button functions and events
   // start game button
   buttons[1].addEventListener("click", () => {
+    if (Game.isGameActive()) {
+      console.log("A game is currently active.");
+      return;
+    }
     form.style.display = "flex";
   });
   // new round button
@@ -151,13 +155,7 @@ const Page = (function () {
 
   // end game button
   buttons[2].addEventListener("click", () => {
-    for (const section of playerStats) {
-      section.querySelector("h2").textContent = "";
-      section.style.visibility = "hidden";
-    }
-    for (const tile of board) {
-      tile.textContent = "";
-    }
+    window.location.href = window.location.href;
   });
 
   // form functions and events
