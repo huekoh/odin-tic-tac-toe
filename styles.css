@@ -90,6 +90,7 @@ button {
   border-radius: 8px;
 
   display: none;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -112,8 +113,11 @@ button {
 }
 
 .player-section {
+  min-width: 15rem;
   padding: 24px;
-  display: none;
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
