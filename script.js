@@ -8,8 +8,23 @@ const Page = (function () {
   const buttons = document.querySelectorAll(".button");
   // player stats display
   const playerStats = document.querySelectorAll(".player-section");
+  // start game form to get player names
+  const form = document.querySelector(".form-popup");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  // board functions
+    // Get the input values
+    const player1Name = document.getElementById("player-x").value;
+    const player2Name = document.getElementById("player-o").value;
+
+    // Update the h2 elements in player sections
+    playerStats[0].querySelector("h2").textContent = `${player1Name}: 0`;
+    playerStats[1].querySelector("h2").textContent = `${player2Name}: 0`;
+
+    form.style.display = "none";
+  });
+
+  // tile board functions
   const setTile = (event) => {
     if (event.target.textContent) {
       console.log("This tile is already taken!!");
@@ -22,26 +37,37 @@ const Page = (function () {
     }
   };
 
+  for (const tile of board) {
+    tile.addEventListener("click", setTile);
+  }
+
+  // button functions
+  const displayStartGame = () => {
+    for (section of playerStats) {
+      section.style.display = "flex";
+    }
+  };
+
+  const openForm = () => {
+    form.style.display = "flex";
+  };
+
+  const displayDefault = () => {
+    for (section of playerStats) {
+      section.style.display = "none";
+    }
+  };
+
   const clearBoard = () => {
     for (const tile of board) {
       tile.textContent = "";
     }
   };
 
-  // button functions
-  const displayStart = () => {
-    for (section of playerStats) {
-      section.style.display = "flex";
-    }
-  };
-
-  // add event listeners
-  for (const tile of board) {
-    tile.addEventListener("click", setTile);
-  }
-
-  buttons[0].addEventListener("click", displayStart);
-  buttons[1].addEventListener("click", clearBoard);
+  buttons[0].addEventListener("click", displayStartGame);
+  buttons[1].addEventListener("click", openForm);
+  buttons[2].addEventListener("click", clearBoard);
+  buttons[3].addEventListener("click", displayDefault);
 
   return { board, setTile };
 })();

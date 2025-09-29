@@ -53,7 +53,8 @@ h5,
 div,
 p,
 a,
-label {
+label,
+button {
   font-family: Inter, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   /* font-size: inherit;
@@ -67,19 +68,47 @@ h1 {
 body {
   display: flex;
   position: relative;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
-.pop-up {
+button {
+  padding: 1.25rem 1rem;
+  border-radius: 0.5rem;
+  border-style: none;
+}
+
+.winner-popup {
   position: absolute;
   top: 25vh;
 
   width: 250px;
   height: 350px;
+  padding: 2rem 1rem;
 
   background-color: white;
   box-shadow: 10px 10px 25px -10px rgba(0, 0, 0, 0.6);
   border-radius: 8px;
+
+  display: none;
+  justify-content: center;
+}
+
+.form-popup {
+  position: absolute;
+  top: 25vh;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  background-color: white;
+  padding: 2rem 2rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
 }
 
 .player-section {
@@ -89,7 +118,7 @@ body {
 }
 
 .game-section {
-  padding: 24px;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,6 +133,11 @@ body {
 
   display: grid;
   grid-template-columns: repeat(3, auto);
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
 }
 
 .tile {
