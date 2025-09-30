@@ -3,7 +3,7 @@ const Game = (function () {
   let playerTurn = 0;
   let gameActive = false;
 
-  const startGame = () => {
+  const startRound = () => {
     playerTurn = 0;
     gameActive = true;
   };
@@ -17,11 +17,6 @@ const Game = (function () {
   const checkWin = (boardState) => {
     let message = "";
     let isWon = false;
-
-    // check for a tie
-    if (boardState.every((cell) => cell !== "")) {
-      return { isWon: false, winner: null, isTie: true };
-    }
 
     // check for a diagonal winner
     if (
@@ -62,11 +57,16 @@ const Game = (function () {
       }
     }
 
+    // check for a tie
+    if (boardState.every((cell) => cell !== "")) {
+      return { isWon: false, winner: null, isTie: true };
+    }
+
     return { isWon: false, winner: null, isTie: false };
   };
 
   return {
-    startGame,
+    startRound,
     makeMove,
     checkWin,
     isGameActive: () => gameActive,
@@ -151,6 +151,7 @@ const Page = (function () {
       tile.textContent = "";
     }
     winPopup.style.display = "none";
+    Game.startRound();
   });
 
   // end game button
@@ -179,6 +180,6 @@ const Page = (function () {
     }
 
     form.style.display = "none";
-    Game.startGame();
+    Game.startRound();
   });
 })();
